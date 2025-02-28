@@ -2,7 +2,7 @@
 
 
 # top k search
-TOP_K = 5
+TOP_K = 3
 SIMILARITY_TRESHOLD = 0.40
 
 # llm model name/id
