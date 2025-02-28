@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+streamlit
+requests
+python-dotenv
+numpy
+pandas
+google-generativeai
+langchain-huggingface
+langchain-community
+langchain-chroma
+hnswlib
+chromadb
+faiss-cpu
+
+
