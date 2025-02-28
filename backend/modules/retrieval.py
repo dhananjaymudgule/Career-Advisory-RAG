@@ -77,7 +77,7 @@ def create_index(embedding_model):
 
 
 @log_helper.log_execution_time
-def search_jobs(user_query: str, embedding_model, faiss_index) -> str:
+def retrieve_context(user_query: str, embedding_model, faiss_index) -> str:
     """
     Searches the FAISS index for job profiles similar to the user's query and filters results based on a similarity threshold.
     

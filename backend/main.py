@@ -1,14 +1,15 @@
 # main.py
 
-from log_helper import logger
 from fastapi import FastAPI, HTTPException
 from modules.retrieval import (
-    search_jobs,
+    retrieve_context,
     load_embedding_model,
     load_index,
     create_index
     )
-from modules.generator import generate_response
+from modules.generator import get_answer
+from log_helper import logger
+
 
 
 # Initialize FastAPI app
@@ -29,30 +30,18 @@ def test_api():
     return {"status": "running"}
 
 
-@app.get("/query/", tags=["Job Search"])
+@app.get("/query/", tags=["Get Answers"])
 def get_jobs(query: str):
     """
-    Retrieve relevant jobs based on the user's query.
-    
-    Args:
-        query (str): User's job-related query (skills, education, career interests).
-    
-    Returns:
-        dict: API response with job recommendations.
+    API endpoint to get answers from RAG AI
     """
-    logger.info(f"Received job query: {query}")
+    logger.info(f"Received query: {query}")
 
     try:
-        relevant_jobs = search_jobs(query, embedding_model, faiss_index)
+        
+        response = get_answer(query, embedding_model, faiss_index)
 
-        if not relevant_jobs:
-            logger.warning(f"No jobs found for query: {query}")
-            return {"status": "Success", "query": query, "response": "No relevant jobs found."}
-
-        response, retrieved_context = generate_response(query, relevant_jobs)
-        logger.info(f"Generated response for query: {query}")
-
-        return {"status": "Success", "query": query, "response": response, "retrieved_context":retrieved_context}
+        return response
 
     except Exception as e:
         logger.error(f"Error processing query '{query}': {str(e)}")
