@@ -31,7 +31,7 @@ def test_api():
 
 
 @app.get("/query/", tags=["Get Answers"])
-def get_jobs(query: str):
+def get_answers(query: str):
     """
     API endpoint to get answers from RAG AI
     """

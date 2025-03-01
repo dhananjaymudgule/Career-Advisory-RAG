@@ -85,7 +85,6 @@ def retrieve_context(user_query: str, embedding_model, faiss_index) -> str:
         user_query (str): User's search query.
         model (HuggingFaceEmbeddings): Preloaded embedding model.
         index (faiss.Index): Preloaded FAISS index.
-        threshold (float): Similarity threshold for filtering results.
 
     Returns:
         str: Retrieved job profiles formatted as text.
@@ -106,8 +105,8 @@ def retrieve_context(user_query: str, embedding_model, faiss_index) -> str:
     valid_indices = [idx for idx, score in zip(indices[0], similarity_scores) if score >= SIMILARITY_TRESHOLD]
     
     if not valid_indices:
-        logger.warning(f"No relevant jobs found above the threshold ({SIMILARITY_TRESHOLD}) for query: {user_query}")
-        return "No relevant jobs found above the similarity threshold."
+        logger.warning(f"No relevant info found above the threshold ({SIMILARITY_TRESHOLD}) for query: {user_query}")
+        return "No relevant info found above the similarity threshold."
 
     text_job_profiles = get_text_job_profiles()
     retrieved_context = "\n\n".join([text_job_profiles[idx] for idx in valid_indices])
